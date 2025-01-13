@@ -8,17 +8,17 @@ import (
 
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
-	maxDataSize := 10000
-	tmp := make([]byte, 1024)
-	data := make([]byte, 0, maxDataSize)
+	// tmp := make([]byte, 1024)
+	data := make([]byte, 1024)
 
 	for {
-		n, err := conn.Read(tmp)
+		// n, err := conn.Read(tmp)
+		_, err := conn.Read(data)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		data = append(data, tmp[:n]...)
+		// data = append(data, tmp[:n]...)
 
 		fmt.Printf("Data : %+v\n", string(data))
 	}
