@@ -4,10 +4,14 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"time"
 )
 
 func handleConnection(conn net.Conn) {
 	defer conn.Close()
+
+	conn.SetDeadline(time.Now().Add(5 * time.Second))
+
 	// tmp := make([]byte, 1024)
 	data := make([]byte, 1024)
 
