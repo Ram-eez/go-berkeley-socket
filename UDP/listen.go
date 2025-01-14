@@ -1,9 +1,10 @@
-package mian
+package main
 
 import (
 	"fmt"
 	"log"
 	"net"
+	"time"
 )
 
 func main() {
@@ -14,6 +15,9 @@ func main() {
 	}
 
 	ln, err := net.ListenUDP("udp", addr)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	defer ln.Close()
 
@@ -23,5 +27,14 @@ func main() {
 
 	for {
 		n, addr, err := ln.ReadFromUDP(buf)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("Recieved %s from %s", []byte(buf[:n]), addr)
+
+		_, err = ln.WriteToUDP([]byte(time.Now().String()), addr)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
