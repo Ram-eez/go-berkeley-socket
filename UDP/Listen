@@ -1,0 +1,27 @@
+package mian
+
+import (
+	"fmt"
+	"log"
+	"net"
+)
+
+func main() {
+	addr, err := net.ResolveUDPAddr("udp", "localhost:3000")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ln, err := net.ListenUDP("udp", addr)
+
+	defer ln.Close()
+
+	fmt.Println("Listening on port :3000")
+
+	buf := make([]byte, 1024)
+
+	for {
+		n, addr, err := ln.ReadFromUDP(buf)
+	}
+}
